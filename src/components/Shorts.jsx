@@ -12,7 +12,6 @@ import {
   faInfo,
 } from "@fortawesome/free-solid-svg-icons";
 import videoData from "./DataProvider";
-import "video.js/dist/video-js.css";
 import shortVideo from "../assets/videos/big_buck_bunny_720p_1mb.mp4";
 
 const Short = memo(({ video, isVisible, index }) => {
