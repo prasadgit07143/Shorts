@@ -1,6 +1,6 @@
 const videoData = [
   {
-    src: "http://playertest.longtailvideo.com/adaptive/wowzaid3/playlist.m3u8",
+    src: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
     title: "Never Gonna Give You Up",
     desc: "Never gonna give you up Never gonna let you down Never gonna run around and desert you Never gonna make you cry Never gonna say goodbye Never gonna tell a lie and hurt you",
     tags: ["music", "video", "funny"],
