@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import videoData from "./DataProvider";
 import "video.js/dist/video-js.css";
+import shortVideo from "../assets/videos/big_buck_bunny_720p_1mb.mp4";
 
 const Short = memo(({ video, isVisible, index }) => {
   const [playState, setPlayState] = useState(isVisible);
@@ -73,7 +74,7 @@ const Short = memo(({ video, isVisible, index }) => {
 
   return (
     <div onDoubleClick={handleLike} className="short | flex jcc fdc">
-      <video
+      {/* <video
         className="video-js"
         preload="auto"
         data-setup="{}"
@@ -85,7 +86,17 @@ const Short = memo(({ video, isVisible, index }) => {
         loop
       >
         <source type="application/x-mpegurl" src={video.src} />
-      </video>
+      </video> */}
+      <video
+        preload="auto"
+        onClick={updatePlayState}
+        ref={videoRef}
+        autoPlay
+        muted
+        playsInline
+        loop
+        src={shortVideo}
+      ></video>
       <div className="video-progress-wrapper | flex aife">
         <div
           className="video-progress-bar"
