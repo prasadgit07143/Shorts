@@ -1,0 +1,307 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.ff-roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-100 {
+  height: 100vh;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.fdc {
+  flex-direction: column;
+}
+
+.aic {
+  align-items: center;
+}
+
+.aifs {
+  align-items: flex-start;
+}
+
+.aife {
+  align-items: flex-end;
+}
+
+.ais {
+  align-items: stretch;
+}
+
+.jcc {
+  justify-content: center;
+}
+
+.jcfs {
+  justify-content: flex-start;
+}
+
+.jcfe {
+  justify-content: flex-end;
+}
+
+.jcsb {
+  justify-content: space-between;
+}
+
+.jcs {
+  justify-content: stretch;
+}
+
+.fz-11 {
+  font-size: 11px;
+}
+
+.fz-12 {
+  font-size: 12px;
+}
+
+.fz-18 {
+  font-size: 18px;
+}
+
+.fz-24 {
+  font-size: 24px;
+}
+
+.fw-400 {
+  font-weight: 400;
+}
+
+.fw-500 {
+  font-weight: 500;
+}
+
+.fw-600 {
+  font-weight: 600;
+}
+
+.fw-700 {
+  font-weight: 700;
+}
+
+/* Shorts Section */
+
+.shorts-section {
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-padding: 10vh 0;
+  position: relative;
+  background: #0f0f0f;
+}
+
+.shorts-section::-webkit-scrollbar {
+  display: none;
+}
+
+.short-wrapper {
+  max-width: 324px;
+  height: 100%;
+  user-select: none;
+  padding: 10vh 0;
+  margin: 0 24px;
+}
+
+.short {
+  min-height: 80vh;
+  width: 100%;
+  position: relative;
+  scroll-snap-align: center;
+  margin-bottom: 20vh;
+}
+
+.short:hover .video-controls {
+  opacity: 1;
+}
+
+.video-js {
+  height: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.short video {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.video-progress-wrapper {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-radius: 16px;
+  padding: 0 6px;
+  overflow: hidden;
+  height: 30px;
+  z-index: 1;
+}
+
+.video-progress-bar {
+  height: 4px;
+  background: #ff0000;
+  transition: "0.1s linear width";
+  border-radius: 20px;
+}
+
+.video-details {
+  color: #fff;
+  position: absolute;
+  bottom: 0;
+  padding: 0 12px 12px;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.75) 100%
+  );
+}
+
+.video-controls {
+  position: absolute;
+  padding: 12px 12px 0;
+  gap: 14px;
+  top: 0;
+  opacity: 0;
+  transition: 0.15s linear all;
+}
+
+.video-controls button {
+  color: #fff;
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  outline: none;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.video-controls button:hover {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.video-nav-controls {
+  position: fixed;
+  right: 100px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 80vh;
+}
+
+.nav-btn-wrapper {
+  border-radius: 50%;
+  height: 56px;
+  width: 56px;
+  background: #272727;
+  cursor: pointer;
+  color: #fff;
+  transition: 0.15s linear all;
+}
+
+.nav-btn-wrapper:hover {
+  background: #535353;
+}
+
+.video-info-wrapper {
+  position: absolute;
+  right: -64px;
+  height: 100%;
+  color: #fff;
+  gap: 36px;
+}
+
+.video-info {
+  border-radius: 50%;
+  height: 48px;
+  width: 48px;
+  background: #272727;
+  cursor: pointer;
+  transition: 0.15s linear all;
+}
+
+.video-info:hover {
+  background: #535353;
+}
+
+.likes-wrapper {
+  animation: pop ease-in-out 0.3s;
+  animation-play-state: paused;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.13);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.likes-wrapper-active {
+  color: #ff0000;
+  background: #fff;
+  animation-play-state: running;
+}
+
+.likes-wrapper-active:hover {
+  background: #f0f0f0;
+}
+
+@media screen and (max-width: 888px) {
+  .video-nav-controls {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .video-info-wrapper {
+    right: 0;
+    justify-content: center;
+    padding-right: 12px;
+  }
+
+  .video-info {
+    background: rgba(0, 0, 0, 0.3);
+    height: 42px;
+    width: 42px;
+    font-size: 18px;
+  }
+
+  .video-info:hover {
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  .video-js {
+    max-width: 300px;
+  }
+}
