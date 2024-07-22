@@ -21,7 +21,7 @@ import {
   faCompress,
 } from "@fortawesome/free-solid-svg-icons";
 import videoData from "./DataProvider";
-import shortVideo from "../assets/videos/big_buck_bunny_720p_1mb.mp4";
+import abnLogo from "../assets/images/abn-logo.png";
 
 const Short = memo(
   ({ video, isVisible, index, resetInfo, isFullScreen, setFullScreen }) => {
@@ -170,8 +170,12 @@ const Short = memo(
             isFullScreen ? " short-no-border-radius" : ""
           }`}
         >
-          <span className="video-title | fz-14 fw-400">{video.title}</span>
-          <br />
+          <div className="flex aic" style={{ marginBottom: "3px" }}>
+            <span className="video-logo-wrapper">
+              <img className="abn-logo" src={abnLogo} alt="abn-logo" />
+            </span>
+            <span className="video-title | fz-14 fw-400">{video.title}</span>
+          </div>
           {video.tags.map((tag) => (
             <span key={tag} className="video-tag">{`#${tag} `}</span>
           ))}
@@ -219,7 +223,10 @@ const Short = memo(
           onClick={() => setInfoState(false)}
           className={`video-desc-wrapper | fdc${infoState ? " flex" : ""}`}
         >
-          <h1 className="video-title | fz-20">{video.title}</h1>
+          <div className="flex aic">
+            <img className="abn-logo" src={abnLogo} alt="abn-logo" />
+            <h1 className="video-title | fz-20">{video.title}</h1>
+          </div>
           <div className="hor-line" />
           <p className="video-desc">{video.desc}</p>
         </div>
