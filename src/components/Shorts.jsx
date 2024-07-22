@@ -105,6 +105,19 @@ const Short = memo(
       if (resetInfo) setInfoState(false);
     }, [resetInfo]);
 
+    useEffect(() => {
+      const handleKeyDown = (e) => {
+        if (e.code === "Space" && isVisible) {
+          e.preventDefault();
+          updatePlayState();
+        }
+      };
+      document.addEventListener("keydown", handleKeyDown);
+      return () => {
+        document.removeEventListener("keydown", handleKeyDown);
+      };
+    }, [updatePlayState]);
+
     const videoClassName = useMemo(
       () => (isFullScreen ? "short-no-border-radius" : ""),
       [isFullScreen]
