@@ -107,7 +107,7 @@ const Short = memo(
 
     useEffect(() => {
       const handleKeyDown = (e) => {
-        if (e.code === "Space" && isVisible) {
+        if (e.code === "Space") {
           e.preventDefault();
           updatePlayState();
         }
