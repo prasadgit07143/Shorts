@@ -151,16 +151,19 @@
   margin-bottom: calc((100vh - min(80vh, 500px)) / 2);
 }
 
-.video-js {
+.video-js,
+.short-video {
   min-height: min(80vh, 500px);
-  max-width: 100%;
+  width: 100%;
   object-fit: cover;
   border-radius: 16px;
 }
 
-.short video {
-  min-height: min(80vh, 500px);
-  width: 100%;
+.video-js {
+  max-width: 100% !important;
+}
+
+.vjs-tech {
   object-fit: cover;
   border-radius: 16px;
 }
@@ -339,7 +342,8 @@
     max-width: 100%;
   }
 
-  .short-full-width video {
+  .short-full-width .short-video,
+  .short-full-width .video-js {
     min-height: 100vh;
   }
 
@@ -362,9 +366,5 @@
 
   .video-info:hover {
     background: rgba(0, 0, 0, 0.6);
-  }
-
-  .video-js {
-    max-width: 300px;
   }
 }

@@ -70,11 +70,13 @@ const Short = memo(
     useEffect(() => {
       if (!videoRef.current) return;
       if (isVisible) {
-        videoRef.current.currentTime = 0;
-        const playPromise = videoRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => setPlayState(true)).catch(() => {});
-        }
+        setTimeout(() => {
+          videoRef.current.currentTime = 0;
+          const playPromise = videoRef.current.play();
+          if (playPromise !== undefined) {
+            playPromise.then(() => setPlayState(true)).catch(() => {});
+          }
+        }, 500);
       } else {
         videoRef.current.pause();
         setPlayState(false);
@@ -129,11 +131,27 @@ const Short = memo(
         >
           <FontAwesomeIcon icon={isFullScreen ? faCompress : faExpand} />
         </div>
+        {/* <video
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onDoubleClick={handleLike}
+          className={"video-js | " + videoClassName}
+          preload="auto"
+          onClick={updatePlayState}
+          ref={videoRef}
+          autoPlay
+          muted
+          playsInline
+          data-setup="{}"
+          loop
+        >
+          <source src={video.src} type="application/x-mpegurl" />
+        </video> */}
         <video
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           onDoubleClick={handleLike}
-          className={videoClassName}
+          className={videoClassName + " short-video"}
           preload="auto"
           onClick={updatePlayState}
           ref={videoRef}
@@ -141,7 +159,7 @@ const Short = memo(
           muted
           playsInline
           loop
-          src={shortVideo}
+          src={video.src}
         />
         <div className={progressWrapperClassName}>
           <div
