@@ -66,16 +66,18 @@ const Short = memo(
 
     useEffect(() => {
       if (!videoRef.current) return;
-      if (isVisible) {
-        videoRef.current.currentTime = 0;
-        videoRef.current
-          .play()
-          .then(() => setPlayState(true))
-          .catch(() => {});
-      } else {
-        videoRef.current.pause();
-        setPlayState(false);
-      }
+      setTimeout(() => {
+        if (isVisible) {
+          videoRef.current.currentTime = 0;
+          videoRef.current
+            .play()
+            .then(() => setPlayState(true))
+            .catch(() => {});
+        } else {
+          videoRef.current.pause();
+          setPlayState(false);
+        }
+      }, 360);
     }, [isVisible]);
 
     useEffect(() => {
@@ -251,7 +253,6 @@ const Shorts = () => {
       ) {
         setVisibleIndex(index);
         setNewVideoScrolled(true);
-        console.log(index);
       }
     });
   }, []);
