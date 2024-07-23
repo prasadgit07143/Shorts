@@ -31,6 +31,7 @@ const Short = memo(
     const [progress, setProgress] = useState(0);
     const [controlsVisible, setControlsVisible] = useState(false);
     const [infoState, setInfoState] = useState(false);
+    const [isDoubleClick, setIsDoubleClick] = useState(false);
     const videoRef = useRef(null);
 
     const updatePlayState = useCallback(() => {
@@ -56,6 +57,12 @@ const Short = memo(
         return newState;
       });
     }, [index]);
+
+    const handleClick = useCallback(() => {
+      isDoubleClick
+        ? setTimeout(() => setIsDoubleClick(false), 300)
+        : updatePlayState();
+    }, [isDoubleClick, updatePlayState]);
 
     useEffect(() => {
       if (!videoRef.current) return;
@@ -83,7 +90,7 @@ const Short = memo(
     useEffect(() => {
       let timeoutId;
       if (controlsVisible && playState) {
-        timeoutId = setTimeout(() => setControlsVisible(false), 1200);
+        timeoutId = setTimeout(() => setControlsVisible(false), 1000);
       }
       return () => clearTimeout(timeoutId);
     }, [controlsVisible, playState]);
@@ -124,10 +131,13 @@ const Short = memo(
         <video
           onMouseEnter={() => setControlsVisible(true)}
           onMouseLeave={() => setControlsVisible(false)}
-          onDoubleClick={handleLike}
+          onDoubleClick={() => {
+            handleLike();
+            setIsDoubleClick(true);
+          }}
           className={`${videoClassName} short-video`}
           preload="auto"
-          onClick={updatePlayState}
+          onClick={handleClick}
           ref={videoRef}
           autoPlay
           muted
@@ -236,11 +246,12 @@ const Shorts = () => {
       const shortCenter = (shortTop + shortBottom) / 2;
 
       if (
-        shortCenter >= scrollPosition &&
+        shortCenter >= scrollPosition + windowHeight / 2 &&
         shortCenter <= scrollPosition + windowHeight
       ) {
         setVisibleIndex(index);
         setNewVideoScrolled(true);
+        console.log(index);
       }
     });
   }, []);
