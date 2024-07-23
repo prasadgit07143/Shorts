@@ -117,27 +117,6 @@
   display: none;
 }
 
-.full-screen-toggle-box {
-  position: absolute;
-  color: #fff;
-  height: 2.625rem;
-  width: 2.625rem;
-  right: -0.75rem;
-  top: 0.75rem;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.2);
-  padding: 0.4375rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  display: none;
-  z-index: 2;
-  transition: 0.15s linear all;
-}
-
-.full-screen-toggle-box:hover {
-  background: rgba(0, 0, 0, 0.4);
-}
-
 .shorts-wrapper {
   margin: 0 auto;
   user-select: none;
@@ -344,10 +323,6 @@
 }
 
 @media screen and (max-width: 500px) {
-  .full-screen-toggle-box {
-    display: flex;
-  }
-
   .short-no-border-radius {
     border-radius: 0 !important;
   }

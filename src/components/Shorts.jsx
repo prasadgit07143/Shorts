@@ -17,14 +17,12 @@ import {
   faHeart,
   faShare,
   faEllipsisVertical,
-  faExpand,
-  faCompress,
 } from "@fortawesome/free-solid-svg-icons";
 import videoData from "./DataProvider";
 import abnLogo from "../assets/images/abn-logo.png";
 
 const Short = memo(
-  ({ video, isVisible, index, resetInfo, isFullScreen, setFullScreen }) => {
+  ({ video, isVisible, index, resetInfo, isFullScreen = true }) => {
     const [playState, setPlayState] = useState(isVisible);
     const [muteState, setMuteState] = useState(true);
     const [likeState, setLikeState] = useState(
@@ -35,46 +33,38 @@ const Short = memo(
     const [infoState, setInfoState] = useState(false);
     const videoRef = useRef(null);
 
-    const toggleFullScreen = useCallback(
-      () => setFullScreen((prev) => !prev),
-      [setFullScreen]
-    );
-    const updatePlayState = useCallback(
-      () =>
-        setPlayState((prev) => {
-          const newState = !prev;
-          videoRef.current?.[newState ? "play" : "pause"]();
-          return newState;
-        }),
-      []
-    );
-    const updateMuteState = useCallback(
-      () =>
-        setMuteState((prev) => {
-          const newState = !prev;
-          if (videoRef.current) videoRef.current.muted = newState;
-          return newState;
-        }),
-      []
-    );
-    const handleLike = useCallback(
-      () =>
-        setLikeState((prev) => {
-          const newState = !prev;
-          localStorage.setItem(`like_video_${index}`, newState.toString());
-          return newState;
-        }),
-      [index]
-    );
+    const updatePlayState = useCallback(() => {
+      setPlayState((prev) => {
+        const newState = !prev;
+        videoRef.current?.[newState ? "play" : "pause"]();
+        return newState;
+      });
+    }, []);
+
+    const updateMuteState = useCallback(() => {
+      setMuteState((prev) => {
+        const newState = !prev;
+        if (videoRef.current) videoRef.current.muted = newState;
+        return newState;
+      });
+    }, []);
+
+    const handleLike = useCallback(() => {
+      setLikeState((prev) => {
+        const newState = !prev;
+        localStorage.setItem(`like_video_${index}`, newState.toString());
+        return newState;
+      });
+    }, [index]);
 
     useEffect(() => {
       if (!videoRef.current) return;
       if (isVisible) {
         videoRef.current.currentTime = 0;
-        const playPromise = videoRef.current.play();
-        if (playPromise !== undefined) {
-          playPromise.then(() => setPlayState(true)).catch(() => {});
-        }
+        videoRef.current
+          .play()
+          .then(() => setPlayState(true))
+          .catch(() => {});
       } else {
         videoRef.current.pause();
         setPlayState(false);
@@ -89,9 +79,6 @@ const Short = memo(
       video.addEventListener("timeupdate", updateProgress);
       return () => video.removeEventListener("timeupdate", updateProgress);
     }, []);
-
-    const handleMouseLeave = useCallback(() => setControlsVisible(false), []);
-    const handleMouseEnter = useCallback(() => setControlsVisible(true), []);
 
     useEffect(() => {
       let timeoutId;
@@ -113,9 +100,7 @@ const Short = memo(
         }
       };
       document.addEventListener("keydown", handleKeyDown);
-      return () => {
-        document.removeEventListener("keydown", handleKeyDown);
-      };
+      return () => document.removeEventListener("keydown", handleKeyDown);
     }, [updatePlayState]);
 
     const videoClassName = useMemo(
@@ -136,17 +121,11 @@ const Short = memo(
           isFullScreen ? " short-full-width" : ""
         }`}
       >
-        <div
-          onClick={toggleFullScreen}
-          className="full-screen-toggle-box | center fz-24"
-        >
-          <FontAwesomeIcon icon={isFullScreen ? faCompress : faExpand} />
-        </div>
         <video
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
+          onMouseEnter={() => setControlsVisible(true)}
+          onMouseLeave={() => setControlsVisible(false)}
           onDoubleClick={handleLike}
-          className={videoClassName + " short-video"}
+          className={`${videoClassName} short-video`}
           preload="auto"
           onClick={updatePlayState}
           ref={videoRef}
@@ -242,7 +221,6 @@ const Shorts = () => {
   const [hasNext, setHasNext] = useState(
     () => visibleIndex < videoData.length - 1
   );
-  const [isFullScreen, setIsFullScreen] = useState(false);
   const sectionRef = useRef(null);
 
   const handleScroll = useCallback(() => {
@@ -328,8 +306,6 @@ const Shorts = () => {
             isVisible={videoIndex === visibleIndex}
             index={videoIndex}
             resetInfo={newVideoScrolled}
-            isFullScreen={isFullScreen}
-            setFullScreen={setIsFullScreen}
           />
         ))}
         <div className="video-nav-controls | flex fdc jcsb fz-24">
