@@ -219,6 +219,10 @@
   transition: 0.15s linear all;
 }
 
+.video-controls:hover {
+  opacity: 1 !important;
+}
+
 .video-controls button {
   color: #fff;
   border-radius: 50%;

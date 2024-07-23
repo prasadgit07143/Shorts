@@ -142,22 +142,6 @@ const Short = memo(
         >
           <FontAwesomeIcon icon={isFullScreen ? faCompress : faExpand} />
         </div>
-        {/* <video
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-          onDoubleClick={handleLike}
-          className={"video-js | " + videoClassName}
-          preload="auto"
-          onClick={updatePlayState}
-          ref={videoRef}
-          autoPlay
-          muted
-          playsInline
-          data-setup="{}"
-          loop
-        >
-          <source src={video.src} type="application/x-mpegurl" />
-        </video> */}
         <video
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
@@ -263,28 +247,25 @@ const Shorts = () => {
 
   const handleScroll = useCallback(() => {
     if (!sectionRef.current) return;
-    const updateVisibleIndex = () => {
-      const shorts = sectionRef.current.querySelectorAll(".short");
-      const scrollPosition = sectionRef.current.scrollTop;
-      const windowHeight = window.innerHeight;
-      shorts.forEach((short, index) => {
-        const shortTop = short.offsetTop;
-        const shortHeight = short.offsetHeight;
-        const shortCenter = shortTop + shortHeight / 2;
-        const viewportCenter = scrollPosition + windowHeight / 2;
-        if (
-          Math.abs(viewportCenter - shortCenter) < shortHeight / 2 &&
-          index !== visibleIndex
-        ) {
-          setNewVideoScrolled(true);
-          setTimeout(() => {
-            setVisibleIndex(index);
-          }, 700);
-        }
-      });
-    };
-    requestAnimationFrame(updateVisibleIndex);
-  }, [visibleIndex]);
+    const shorts = sectionRef.current.querySelectorAll(".short");
+    const scrollPosition = sectionRef.current.scrollTop;
+    const windowHeight = window.innerHeight;
+
+    shorts.forEach((short, index) => {
+      const shortRect = short.getBoundingClientRect();
+      const shortTop = shortRect.top + scrollPosition;
+      const shortBottom = shortTop + shortRect.height;
+      const shortCenter = (shortTop + shortBottom) / 2;
+
+      if (
+        shortCenter >= scrollPosition &&
+        shortCenter <= scrollPosition + windowHeight
+      ) {
+        setVisibleIndex(index);
+        setNewVideoScrolled(true);
+      }
+    });
+  }, []);
 
   useEffect(() => {
     if (newVideoScrolled) setNewVideoScrolled(false);
